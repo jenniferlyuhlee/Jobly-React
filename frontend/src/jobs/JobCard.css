@@ -1,0 +1,7 @@
+.JobCard a {
+    color: black;
+}
+
+.JobCard a:hover{
+    color: skyblue;
+}

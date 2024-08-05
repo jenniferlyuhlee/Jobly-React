@@ -1,0 +1,45 @@
+.NavBar{
+    padding: 1rem;
+    background-color: skyblue;
+    display: flex;
+    justify-content: space-between;
+}
+
+.NavBar-right{
+    display: flex;
+    align-items: center;
+}
+
+.NavBar-link-left, .NavBar-link-right{
+    color: white;
+    text-align: left;
+}
+
+.NavBar-link-left:hover, .NavBar-link-right:hover{
+    color: #333333;
+}
+
+.NavBar-link-left{
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.NavBar-link-right{
+    text-align: right;
+    margin-left: 1.5rem;
+
+}
+
+.NavBar-link-right:current{
+    color: red;
+}
+
+
+
+/* .navbar-nav{
+    display: flex;
+}
+.nav-item{
+    margin: 1rem;
+} */
