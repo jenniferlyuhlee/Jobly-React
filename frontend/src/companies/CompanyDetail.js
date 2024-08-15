@@ -2,28 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import JoblyApi from "../api";
 import JobCard from "../jobs/JobCard";
+import Loading from "../shared/Loading";
 
 function CompanyDetails() {
     const { handle } = useParams();
     // set to null to use loading spinner
-    const [company, setCompany] = useState({});
+    const [company, setCompany] = useState(null);
+    // error state for invalid param company handles
+    const [error, setError] = useState(false);
 
     useEffect(function getCompanyDetails() {
         async function getCompany(){
-            setCompany(await JoblyApi.getCompany(handle));
+            try{
+                setCompany(await JoblyApi.getCompany(handle));
+            }
+            catch(err){
+                console.error("Company not found")
+                setError(true)
+            }
         }
         getCompany();
     }, [handle]);
 
-    if (!company){
-        return(
-            <h1>loading...</h1>
-        )
-    }
+    if(error) return <p className="text-center m-4">Sorry, this company could not be found.</p>
+
+    if (!company) return <Loading />
     
-    console.log(company.jobs)
     return (
-        <div className="CompanyDetail mt-4 text-white">
+        <div className="CompanyDetail mt-4">
             <div className="row">
                 <img className="col-2"src={company.logoUrl}/>
                 <div className="col-10">

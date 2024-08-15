@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import JoblyApi from "../api";
 import SearchForm from "../shared/SearchForm";
 import JobCard from "./JobCard";
+import Loading from "../shared/Loading";
 
 function JobsList(){
-     // set to null to use ..loading spinner
     const [jobs, setJobs] = useState(null);
 
     useEffect(function fetchJobs(){
@@ -17,7 +17,7 @@ function JobsList(){
 
     if(!jobs){
         return(
-            <h1>...loading</h1>
+            <Loading />
         )
     }
     return(

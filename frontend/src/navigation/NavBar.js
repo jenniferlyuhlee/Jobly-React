@@ -1,31 +1,31 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import UserContext from "../auth-user/UserContext";
 import "./NavBar.css"
 
-function NavBar ({logout}) {
-    const {currUser} = useContext(UserContext);
+function NavBar () {
+    const {currUser, logout} = useContext(UserContext);
 
     return (
         <div className="NavBar">
             <div className="NavBar-left">
-                <Link className="NavBar-link-left" 
+                <NavLink className="NavBar-link-left" 
                     to="/">Jobly
-                </Link>
+                </NavLink>
             </div>
             <div className="NavBar-right">
                 {currUser?
                 // if user, show logged in navbar
                 <div>
-                    <Link className="NavBar-link-right" 
+                    <NavLink className="NavBar-link-right" 
                     to="/companies">Companies
-                    </Link>
-                    <Link className="NavBar-link-right" 
+                    </NavLink>
+                    <NavLink className="NavBar-link-right" 
                         to="/jobs">Jobs
-                    </Link>
-                    <Link className="NavBar-link-right" 
+                    </NavLink>
+                    <NavLink className="NavBar-link-right" 
                         to="/profile">Profile
-                    </Link>
+                    </NavLink>
                     <Link className="NavBar-link-right" 
                         to="/" 
                         onClick={logout}>Logout

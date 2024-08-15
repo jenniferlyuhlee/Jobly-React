@@ -5,11 +5,17 @@ import useLocalStorageState from './hooks/useLocalStorageState';
 import UserContext from './auth-user/UserContext';
 import NavBar from './navigation/NavBar';
 import RouteList from './navigation/RouteList';
+import Loading from './shared/Loading';
 
 function App() {
+  // centralized states: user infoLoaded, currUser, token, 
+  const [infoLoaded, setInfoLoaded] = useState(false);
   const [currUser, setCurrUser] = useState(null);
   const [token, setToken] = useLocalStorageState('jobly-token');
+  const [jobsAppliedTo, setJobsAppliedTo] = useState(new Set([]));
 
+  // loads user info from API, runs when user is logged in with auth token
+  // re-runs everytime token changes (user logs in)
   useEffect(function getUserInfo (){
     async function getCurrUser(){
       if (token){
@@ -18,12 +24,18 @@ function App() {
           JoblyApi.token = token
           let currUser = await JoblyApi.getCurrUser(username);
           setCurrUser(currUser);
+
+          setJobsAppliedTo(new Set(currUser.applications))
         }
         catch(err){
           setCurrUser(null);
         }
       }
+      setInfoLoaded(true);
     }
+    // controls spinner, lets app wait for successful API data fetch 
+    // before rendering correct components
+    setInfoLoaded(false);
     getCurrUser();
   }, [token])
 
@@ -57,9 +69,26 @@ function App() {
     setToken(null);
   }
 
+  // Checks if user already applied to job.
+  function hasAppliedToJob(jobId){
+    return jobsAppliedTo.has(jobId);
+  }
+
+  // Apply to job, adds to state jobsAppliedTo
+  async function applyToJob(jobId){
+    if (hasAppliedToJob(jobId)) return;
+    await JoblyApi.applyToJob(currUser.username, jobId)
+    setJobsAppliedTo(new Set([... jobsAppliedTo, jobId]))
+    // updates currUser.applications
+    setCurrUser(curr => ({...curr, applications: [...curr.applications, jobId]}))
+  }
+
+  if (!infoLoaded) return <Loading />
+  
   return (
-    <UserContext.Provider value = {{currUser, setCurrUser}}>
-      <NavBar logout={logout}/>
+    <UserContext.Provider 
+      value = {{currUser, setCurrUser, logout, applyToJob, hasAppliedToJob}}>
+      <NavBar />
       <div className='container col-md-8'>
         <RouteList login={login} signup={signup}/>
       </div>

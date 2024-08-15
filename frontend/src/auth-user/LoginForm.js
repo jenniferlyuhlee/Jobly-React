@@ -1,17 +1,33 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import Alert from "../shared/Alert";
+import UserContext from "./UserContext";
 
+/**
+ * LoginForm component
+ * Props: login
+ * - When submitted, calls login function prop from App.js
+ * - Redirects user to user homepage
+ * State: formData, formErrors
+ * - manages form state
+ * - manages form errors to display if unsuccessful submit/bad request made
+ */
 function LoginForm( {login} ){
-    const navigate = useNavigate();
     const initialState = {
         username:"",
         password:""
     }
-
+    // hooks called unconditionally
+    const {currUser} = useContext(UserContext);
+    const navigate = useNavigate();
     // states: formData, formErrors
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([])
+
+    // conditional rendering - redirects logged in users to homepage
+    if(currUser){
+        return <Navigate to="/" />
+    }
 
     // general callback to update targeted form data
     function handleChange (e) {
@@ -71,7 +87,7 @@ function LoginForm( {login} ){
                     null
                 }
                 <div className="text-center">
-                    <button className="btn btn-success">Login</button>
+                    <button className="btn btn-tertiary">Login</button>
                 </div>
             </form>
         </div>

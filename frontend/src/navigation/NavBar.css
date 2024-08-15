@@ -1,6 +1,6 @@
 .NavBar{
     padding: 1rem;
-    background-color: skyblue;
+    background-color: white;
     display: flex;
     justify-content: space-between;
 }
@@ -10,16 +10,16 @@
     align-items: center;
 }
 
-.NavBar-link-left, .NavBar-link-right{
-    color: white;
-    text-align: left;
+.NavBar-link-right{
+    color: #555555;
 }
 
 .NavBar-link-left:hover, .NavBar-link-right:hover{
-    color: #333333;
+    color: black;
 }
 
 .NavBar-link-left{
+    color: rgb(94, 184, 219);
     text-align: left;
     font-size: 1.2rem;
     font-weight: bold;
@@ -31,15 +31,7 @@
 
 }
 
-.NavBar-link-right:current{
-    color: red;
+.NavBar-link-right.active{
+    font-weight: bold;
+    color: black;
 }
-
-
-
-/* .navbar-nav{
-    display: flex;
-}
-.nav-item{
-    margin: 1rem;
-} */

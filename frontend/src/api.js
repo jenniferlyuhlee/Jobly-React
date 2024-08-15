@@ -60,7 +60,7 @@ class JoblyApi {
     return res.companies;
   }
 
-  /** Get details on a company by handle. */
+  /** Get details on a company by handle */
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
     return res.company;
@@ -70,6 +70,29 @@ class JoblyApi {
   static async getJobs(title){
     let res = await this.request("jobs", {title});
     return res.jobs;
+  }
+
+  //** Gets job data based on job id */
+  static async getJob(jobId){
+    let res = await this.request(`jobs/${jobId}`);
+    return res.job;
+  }
+
+  /** Applies to job */
+  static async applyToJob(username, jobId){
+    await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
+  }
+
+  /** Updates user profile */
+  static async updateProfile(username, data){
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
+  }
+
+  /** Deletes user account */
+  static async deleteUser(username){
+    let res = await this.request(`users/${username}`, {},  "delete");
+    return res.deleted;
   }
 
   // obviously, you'll add a lot here ...

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 
+/**
+ * SearchForm for filtering through company/job results
+ * Props: placeholder, searchFor func
+ * - searchFor makes filtering request to database and changes state
+ * of companies [] or jobs [] 
+ */
 function SearchForm({searchFor, placeholder}) {
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -28,7 +34,7 @@ function SearchForm({searchFor, placeholder}) {
                             value={searchQuery}
                             onChange={handleChange}/>
                 </div>
-                <button className="btn btn-secondary">
+                <button className="btn btn-tertiary mx-2">
                     Search
                 </button>
             </form>

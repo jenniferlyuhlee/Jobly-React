@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import JoblyApi from "../api";
-import Loading from "../shared/Loading";
+import Loading from "../shared/Loading"
 import SearchForm from "../shared/SearchForm";
 import CompanyCard from "./CompanyCard";
 
@@ -19,7 +19,7 @@ function CompanyList () {
     }
 
     if(!companies){
-        return(<h1>loading</h1>)
+        return(<Loading />)
     }
 
     return (
